@@ -1,0 +1,1 @@
+g++ -std=c++26 test.cpp -lxcb -o test && ./test
