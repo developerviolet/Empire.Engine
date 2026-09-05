@@ -1,5 +1,8 @@
 // Connection.cpp
 #include "Connection.hpp"
+#include "../../../Aliases.hpp"
+
+using namespace Engine;
 
 namespace Platform
 {
