@@ -3,7 +3,7 @@
 
 #include <xcb/xcb.h>
 
-namespace Platform
+namespace Xcb
 {
     class Connection
     {

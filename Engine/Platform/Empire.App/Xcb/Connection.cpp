@@ -1,7 +1,7 @@
 // Connection.cpp
 #include "Connection.hpp"
 
-namespace Platform
+namespace Xcb
 {
     Connection::Connection()
         : connection(xcb_connect(nullptr, nullptr))
