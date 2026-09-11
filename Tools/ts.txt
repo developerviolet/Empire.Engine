@@ -1,0 +1,98 @@
+ну а по поводу итогового.... в итоге всеравно под любую платформу (хоть то линукс хоть то виндовс) оно должно например из папки Rendering потом собрать все в libRendering.so или libRendering.dll и тд.... и ваще типо если сделано так что структура движка Empire Engine/
+├── Config/
+├── Engine/
+│   ├── Anim Graph/
+│   ├── Application/
+│   ├── Audio/
+│   ├── Config/
+│   ├── Containers/
+│   ├── Crypto/
+│   ├── Debugger/
+│   ├── Display/
+│   ├── Entity Component System/
+│   ├── Error/
+│   ├── Extensions/
+│   ├── File System/
+│   ├── Foundation/
+│   ├── Gameplay Entity System/
+│   ├── Input/
+│   ├── Inter-Process Communication/
+│   ├── Math/
+│   ├── Memory/
+│   ├── Network/
+│   ├── Physics/
+│   ├── Platform/
+│   │   ├── build/
+│   │   ├── Empire.App/
+│   │   │   ├── Cocoa/
+│   │   │   ├── Wayland/
+│   │   │   ├── Win32/
+│   │   │   └── Xcb/
+│   │   │       ├── Connection.cpp
+│   │   │       └── Connection.hpp
+│   │   ├── Empire.Audio/
+│   │   ├── Empire.Clipboard/
+│   │   ├── Empire.Cursor/
+│   │   ├── Empire.Dialog/
+│   │   ├── Empire.Environment/
+│   │   ├── Empire.FileSystem/
+│   │   ├── Empire.Input/
+│   │   ├── Empire.Library/
+│   │   ├── Empire.Monitor/
+│   │   ├── Empire.Network/
+│   │   ├── Empire.Process/
+│   │   ├── Empire.Render/
+│   │   ├── Empire.Threading/
+│   │   ├── Empire.Time/
+│   │   ├── Empire.Window/
+│   │   │   └── Xcb/
+│   │   │       ├── Window.cpp
+│   │   │       └── Window.hpp
+│   │   ├── README.md
+│   │   ├── Tests/
+│   │   └── xmake.lua
+│   ├── Profiling/
+│   ├── README.md
+│   ├── Render Graph/
+│   ├── Rendering/
+│   ├── Scene Graph/
+│   └── Scripting/
+├── Extensions/
+├── Scripts/
+
+
+то оно короче воссоздает такуюже структуру считай в Build папке и типо вместо папки Scene Graph просто будет например libSceneGraph.so для красоты... и ваще если захочу можно будет настроить так чтобы даже например из Platform/
+├── Empire.App/
+├── Empire.Audio/
+├── Empire.Clipboard/
+├── Empire.Cursor/
+├── Empire.Dialog/
+├── Empire.Environment/
+├── Empire.FileSystem/
+├── Empire.Input/
+├── Empire.Library/
+├── Empire.Monitor/
+├── Empire.Network/
+├── Empire.Process/
+├── Empire.Render/
+├── Empire.Threading/
+├── Empire.Time/
+├── Empire.Window/
+
+сделало примерно так Platform/
+├── Empire.App.so
+├── Empire.Audio.so
+├── Empire.Clipboard.so
+├── Empire.Cursor.so
+├── Empire.Dialog.so
+├── Empire.Environment.so
+├── Empire.FileSystem.so
+├── Empire.Input.so
+├── Empire.Library.so
+├── Empire.Monitor.so
+├── Empire.Network.so
+├── Empire.Process.so
+├── Empire.Render.so
+├── Empire.Threading.so
+├── Empire.Time.so
+├── Empire.Window.so
