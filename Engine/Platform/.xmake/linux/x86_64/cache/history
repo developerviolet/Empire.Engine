@@ -22,6 +22,17 @@
         "xmake run",
         "xmake clean",
         "xmake ",
+        "xmake run",
+        "xmake ",
+        "xmake run",
+        "xmake ",
+        "xmake run",
+        "xmake clean",
+        "xmake ",
+        "xmake run",
+        "xmake clean",
+        "xmake ",
+        "xmake run",
         "xmake run"
     }
 }

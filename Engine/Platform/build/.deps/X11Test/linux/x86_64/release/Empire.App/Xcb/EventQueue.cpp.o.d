@@ -1,5 +1,10 @@
 {
     depfiles_format = "gcc",
+    depfiles = "EventQueue.o: Empire.App/Xcb/EventQueue.cpp Empire.App/Xcb/EventQueue.hpp  Empire.App/Xcb/Connection.hpp\
+",
+    files = {
+        "Empire.App/Xcb/EventQueue.cpp"
+    },
     values = {
         "/usr/bin/g++",
         {
@@ -14,10 +19,5 @@
             "-I..",
             "-DNDEBUG"
         }
-    },
-    depfiles = "EventQueue.o: Empire.App/Xcb/EventQueue.cpp Empire.App/Xcb/EventQueue.hpp  Empire.App/Xcb/Connection.hpp\
-",
-    files = {
-        "Empire.App/Xcb/EventQueue.cpp"
     }
 }

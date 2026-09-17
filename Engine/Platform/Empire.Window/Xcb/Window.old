@@ -1,7 +1,6 @@
 #include "Window.hpp"
 
 #include <cstdlib>
-#include <cstring>
 #include <xcb/xcb.h>
 
 #include "Empire.App/Xcb/Connection.hpp"
@@ -82,45 +81,8 @@ namespace Xcb
 
             std::free(stateReply);
             return found;
-        }
-
-        void SetWindowTypeNormal(xcb_connection_t* conn, xcb_window_t window)
-        {
-            xcb_intern_atom_cookie_t typeCookie = xcb_intern_atom(conn, 0, 19, "_NET_WM_WINDOW_TYPE");
-            xcb_intern_atom_cookie_t normalCookie = xcb_intern_atom(conn, 0, 24, "_NET_WM_WINDOW_TYPE_NORMAL");
-
-            xcb_intern_atom_reply_t* typeReply = xcb_intern_atom_reply(conn, typeCookie, nullptr);
-            xcb_intern_atom_reply_t* normalReply = xcb_intern_atom_reply(conn, normalCookie, nullptr);
-
-            if (typeReply && normalReply)
-            {
-                xcb_change_property(conn, XCB_PROP_MODE_REPLACE, window,
-                                     typeReply->atom, XCB_ATOM_ATOM, 32,
-                                     1, &normalReply->atom);
-            }
-
-            std::free(typeReply);
-            std::free(normalReply);
-        }
-
-        void SetMotifDecorations(xcb_connection_t* conn, xcb_window_t window)
-        {
-            xcb_intern_atom_cookie_t cookie = xcb_intern_atom(conn, 0, 16, "_MOTIF_WM_HINTS");
-            xcb_intern_atom_reply_t* reply = xcb_intern_atom_reply(conn, cookie, nullptr);
-
-            if (!reply) return;
-
-            // Используем u32 массив из 5 элементов во избежание структурного padding
-            u32 hints[5] = {0};
-            hints[0] = 2; // MWM_HINTS_DECORATIONS
-            hints[2] = 1; // MWM_DECOR_ALL
-
-            xcb_change_property(conn, XCB_PROP_MODE_REPLACE, window,
-                                 reply->atom, reply->atom, 32,
-                                 5, hints);
-
-            std::free(reply);
-        }
+        } 
+       
     } 
 
     Window::Window(const Engine::WindowConfig& config)
@@ -141,11 +103,7 @@ namespace Xcb
             ? screen->height_in_pixels
             : config.height;
 
-        // Расширяем маску событий для нормальной работы с WM
-        u32 eventMask = XCB_EVENT_MASK_EXPOSURE |
-                         XCB_EVENT_MASK_STRUCTURE_NOTIFY |
-                         XCB_EVENT_MASK_PROPERTY_CHANGE |
-                         XCB_EVENT_MASK_FOCUS_CHANGE;
+        u32 eventMask = XCB_EVENT_MASK_PROPERTY_CHANGE;
 
         xcb_create_window(conn,
                            XCB_COPY_FROM_PARENT,
@@ -153,16 +111,11 @@ namespace Xcb
                            screen->root,
                            0, 0,
                            actualWidth, actualHeight,
-                           0,
+                           10,
                            XCB_WINDOW_CLASS_INPUT_OUTPUT,
                            screen->root_visual,
                            XCB_CW_EVENT_MASK, &eventMask);
 
-        // 1. Устанавливаем типы и подсказки WM ДО маппинга окна
-        SetWindowTypeNormal(conn, window);
-        SetMotifDecorations(conn, window);
-
-        // 2. Имя окна
         xcb_change_property(conn,
                              XCB_PROP_MODE_REPLACE,
                              window,
@@ -172,11 +125,15 @@ namespace Xcb
                              config.title.size(),
                              config.title.c_str());
 
-        xcb_intern_atom_cookie_t netWmNameCookie = xcb_intern_atom(conn, 0, 12, "_NET_WM_NAME");
-        xcb_intern_atom_reply_t* netWmNameReply = xcb_intern_atom_reply(conn, netWmNameCookie, nullptr);
+        xcb_intern_atom_cookie_t netWmNameCookie =
+            xcb_intern_atom(conn, 0, 12, "_NET_WM_NAME");
+        xcb_intern_atom_reply_t* netWmNameReply =
+            xcb_intern_atom_reply(conn, netWmNameCookie, nullptr);
 
-        xcb_intern_atom_cookie_t utf8StringCookie = xcb_intern_atom(conn, 0, 11, "UTF8_STRING");
-        xcb_intern_atom_reply_t* utf8StringReply = xcb_intern_atom_reply(conn, utf8StringCookie, nullptr);
+        xcb_intern_atom_cookie_t utf8StringCookie =
+            xcb_intern_atom(conn, 0, 11, "UTF8_STRING");
+        xcb_intern_atom_reply_t* utf8StringReply =
+            xcb_intern_atom_reply(conn, utf8StringCookie, nullptr);
 
         if (netWmNameReply && utf8StringReply)
         {
@@ -196,12 +153,15 @@ namespace Xcb
         std::free(netWmNameReply);
         std::free(utf8StringReply);
 
-        // 3. Протоколы закрытия
-        xcb_intern_atom_cookie_t protocolsCookie = xcb_intern_atom(conn, 0, 12, "WM_PROTOCOLS");
-        xcb_intern_atom_reply_t* protocolsReply = xcb_intern_atom_reply(conn, protocolsCookie, nullptr);
+        xcb_intern_atom_cookie_t protocolsCookie =
+            xcb_intern_atom(conn, 0, 12, "WM_PROTOCOLS");
+        xcb_intern_atom_reply_t* protocolsReply =
+            xcb_intern_atom_reply(conn, protocolsCookie, nullptr);
 
-        xcb_intern_atom_cookie_t deleteCookie = xcb_intern_atom(conn, 0, 16, "WM_DELETE_WINDOW");
-        xcb_intern_atom_reply_t* deleteReply = xcb_intern_atom_reply(conn, deleteCookie, nullptr);
+        xcb_intern_atom_cookie_t deleteCookie =
+            xcb_intern_atom(conn, 0, 16, "WM_DELETE_WINDOW");
+        xcb_intern_atom_reply_t* deleteReply =
+            xcb_intern_atom_reply(conn, deleteCookie, nullptr);
 
         if (protocolsReply && deleteReply)
         {
@@ -222,7 +182,6 @@ namespace Xcb
 
         EventQueue::Instance().RegisterWindow(window);
 
-        // 4. Мапим окно в самом конце и сбрасываем буфер
         xcb_map_window(conn, window);
         xcb_flush(conn);
     }

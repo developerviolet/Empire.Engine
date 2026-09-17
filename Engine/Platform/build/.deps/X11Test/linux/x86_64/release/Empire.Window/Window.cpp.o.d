@@ -1,5 +1,10 @@
 {
     depfiles_format = "gcc",
+    depfiles = "Window.o: Empire.Window/Window.cpp Empire.Window/Window.hpp  Empire.Window/WindowConfig.hpp ../Aliases.hpp  Empire.Window/Xcb/Window.hpp\
+",
+    files = {
+        "Empire.Window/Window.cpp"
+    },
     values = {
         "/usr/bin/g++",
         {
@@ -14,10 +19,5 @@
             "-I..",
             "-DNDEBUG"
         }
-    },
-    depfiles = "Window.o: Empire.Window/Window.cpp Empire.Window/Window.hpp  Empire.Window/WindowConfig.hpp ../Aliases.hpp  Empire.Window/Xcb/Window.hpp\
-",
-    files = {
-        "Empire.Window/Window.cpp"
     }
 }
