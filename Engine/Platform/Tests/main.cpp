@@ -10,8 +10,8 @@ using namespace Engine;
 int main()
 {
     WindowConfig editorConfig;
-    editorConfig.width = 800;
-    editorConfig.height = 600;
+    editorConfig.width = Auto;
+    editorConfig.height = Auto;
     editorConfig.title = "Resizable Test";
 
     Window editor(editorConfig);

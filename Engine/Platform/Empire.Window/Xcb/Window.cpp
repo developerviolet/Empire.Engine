@@ -81,8 +81,9 @@ namespace Xcb
 
             std::free(stateReply);
             return found;
-        }
-    }
+        } 
+       
+    } 
 
     Window::Window(const Engine::WindowConfig& config)
     {

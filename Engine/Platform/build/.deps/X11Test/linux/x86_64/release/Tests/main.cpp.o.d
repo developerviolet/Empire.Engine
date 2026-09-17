@@ -1,10 +1,5 @@
 {
-    files = {
-        "Tests/main.cpp"
-    },
     depfiles_format = "gcc",
-    depfiles = "main.o: Tests/main.cpp Empire.Window/Window.hpp  Empire.Window/WindowConfig.hpp ../Aliases.hpp\
-",
     values = {
         "/usr/bin/g++",
         {
@@ -16,9 +11,13 @@
             "-I.",
             "-IEmpire.App",
             "-IEmpire.Window",
-            "-IEmpire.Render",
             "-I..",
             "-DNDEBUG"
         }
+    },
+    depfiles = "main.o: Tests/main.cpp Empire.Window/Window.hpp  Empire.Window/WindowConfig.hpp ../Aliases.hpp\
+",
+    files = {
+        "Tests/main.cpp"
     }
 }

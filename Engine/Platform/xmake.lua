@@ -11,7 +11,6 @@ target("X11Test")
         "Empire.Window/*.cpp",
         "Empire.Window/Xcb/*.cpp",
         "Empire.App/Xcb/*.cpp",
-        "Empire.Render/X11/OpenGL/*.cpp",
         "Tests/*.cpp"
     )
 
@@ -19,14 +18,10 @@ target("X11Test")
         ".",
         "Empire.App",
         "Empire.Window",
-        "Empire.Render",
         ".."
     )
 
     add_links(
         "xcb",
-        "X11",
-        "GL",
-        "GLX",
-        "glbinding"
+        "X11"
     )

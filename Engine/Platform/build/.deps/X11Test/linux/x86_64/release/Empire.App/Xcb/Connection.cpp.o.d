@@ -1,10 +1,5 @@
 {
-    files = {
-        "Empire.App/Xcb/Connection.cpp"
-    },
     depfiles_format = "gcc",
-    depfiles = "Connection.o: Empire.App/Xcb/Connection.cpp Empire.App/Xcb/Connection.hpp\
-",
     values = {
         "/usr/bin/g++",
         {
@@ -16,9 +11,13 @@
             "-I.",
             "-IEmpire.App",
             "-IEmpire.Window",
-            "-IEmpire.Render",
             "-I..",
             "-DNDEBUG"
         }
+    },
+    depfiles = "Connection.o: Empire.App/Xcb/Connection.cpp Empire.App/Xcb/Connection.hpp\
+",
+    files = {
+        "Empire.App/Xcb/Connection.cpp"
     }
 }
